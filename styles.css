@@ -1,0 +1,160 @@
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 10px;
+  background-image: url('rickandmorty.jpg');
+  background-size: auto;
+
+}
+
+button  {
+    background-color: greenyellow;
+}
+
+.timer {
+  text-align: center;
+  font-size: 3rem;
+  margin-top: 0;
+  color: orange;
+}
+
+.game-over {
+  text-align: center;
+  font-size: 6rem;
+  color: tomato;
+  margin-top: 20px;
+}
+
+.high-score-display {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 2.5rem;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  color: magenta;
+  font-weight: bold;
+  z-index: 1000;
+}
+
+.difficulty-select {
+  position: absolute;
+  top: 150px;
+  left: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 10px 20px;
+  border-radius: 1rem;
+  color: #F42D64;
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+.difficulty-select label {
+  margin-right: 10px;
+}
+
+.difficulty-select select {
+  padding: 5px 10px;
+  font-size: 1.4rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: #F42D64 ;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.controls button {
+  margin: 0 5px;
+  padding: 10px 20px;
+  font-size: 1.4rem;
+  border: none;
+  border-radius: 1rem;
+  background-color: greenyellow;
+  cursor: pointer;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Lucida Console", "Courier New", 
+  monospace;
+  color: #62b3ce ;
+  font-weight: bolder;
+}
+
+h1 {
+  text-align: center;
+  font-size: 9rem;
+  line-height: 1;
+  margin-bottom: 0;
+}
+
+.controls {
+  margin: 20px 5px;
+  text-align: center;
+}
+
+.score {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0 3rem;
+  line-height: 1;
+  border-radius: 1rem;
+}
+
+.game {
+  width: 600px;
+  height: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+}
+
+.hole {
+  flex: 1 0 33.33%;
+  overflow: hidden;
+  position: relative;
+}
+
+.hole:after {
+  display: block;
+  background: url('portal.png')
+    bottom center no-repeat;
+  background-size: contain;
+  content: "";
+  width: 100%;
+  height: 120px;
+  position: absolute;
+  z-index: 1;
+  bottom: -10px;
+}
+
+.mole {
+  background: url("mole.svg") bottom center no-repeat;
+  background: url('rickmorty.png')
+    bottom center no-repeat;
+  background-size: 90%;
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  height: 100%;
+  transition: all 0.4s;
+  z-index: 2;
+}
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 50px;
+    font-size: larger;
+    color: darkorange;
+}
+
+
+.hole.up .mole {
+  top: 0;
+}
