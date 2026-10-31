@@ -1,3 +1,4 @@
+
 *,
 *:before,
 *:after {
@@ -9,11 +10,10 @@ html {
   font-size: 10px;
   background-image: url('rickandmorty.jpg');
   background-size: auto;
-
 }
 
-button  {
-    background-color: greenyellow;
+button {
+  background-color: greenyellow;
 }
 
 .timer {
@@ -64,7 +64,7 @@ button  {
   font-size: 1.4rem;
   border-radius: 0.5rem;
   border: none;
-  background-color: #F42D64 ;
+  background-color: #F42D64;
   font-weight: bold;
   cursor: pointer;
 }
@@ -82,9 +82,8 @@ button  {
 body {
   padding: 0;
   margin: 0;
-  font-family: "Lucida Console", "Courier New", 
-  monospace;
-  color: #62b3ce ;
+  font-family: "Lucida Console", "Courier New", monospace;
+  color: #62b3ce;
   font-weight: bolder;
 }
 
@@ -123,8 +122,7 @@ h1 {
 
 .hole:after {
   display: block;
-  background: url('portal.png')
-    bottom center no-repeat;
+  background: url('portal.png') bottom center no-repeat;
   background-size: contain;
   content: "";
   width: 100%;
@@ -132,12 +130,13 @@ h1 {
   position: absolute;
   z-index: 1;
   bottom: -10px;
+
+  /* Portal must not intercept clicks */
+  pointer-events: none;
 }
 
 .mole {
-  background: url("mole.svg") bottom center no-repeat;
-  background: url('rickmorty.png')
-    bottom center no-repeat;
+  background: url('rickmorty.png') bottom center no-repeat;
   background-size: 90%;
   position: absolute;
   top: 100%;
@@ -145,15 +144,19 @@ h1 {
   height: 100%;
   transition: all 0.4s;
   z-index: 2;
-}
-.container {
-    max-width: 1100px;
-    margin: auto;
-    padding: 50px;
-    font-size: larger;
-    color: darkorange;
+
+  /* Keep visible Rick clickable */
+  pointer-events: auto;
+  cursor: pointer;
 }
 
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 50px;
+  font-size: larger;
+  color: darkorange;
+}
 
 .hole.up .mole {
   top: 0;
