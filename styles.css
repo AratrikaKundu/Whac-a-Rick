@@ -851,3 +851,299 @@ body:has(#authScreen.active) .navbar {
     color: #FF00FF !important;
     text-shadow: none !important;
 }
+
+
+/* ==========================================
+   LEADERBOARD - NEON ARCADE REDESIGN
+   Background image remains unchanged
+   ========================================== */
+
+#leaderboardScreen {
+    min-height: 100vh;
+    padding: 55px 7% 70px;
+    background: transparent !important;
+    color: #ffffff;
+}
+
+/* LEADERBOARD HEADER */
+
+#leaderboardScreen .leaderboard-header {
+    text-align: center;
+    margin: 0 auto 55px;
+}
+
+#leaderboardScreen .leaderboard-header .eyebrow {
+    color: #c084fc;
+    letter-spacing: 3px;
+    font-size: 1.3rem;
+}
+
+#leaderboardScreen .leaderboard-header h1 {
+    color: #ffffff;
+    font-size: clamp(3.5rem, 6vw, 6rem);
+    margin: 18px 0;
+    letter-spacing: 3px;
+}
+
+#leaderboardScreen .leaderboard-header h1 span {
+    color: #c084fc;
+}
+
+#leaderboardScreen .leaderboard-header p {
+    color: #d4c5e8;
+    font-size: 1.5rem;
+}
+
+/* TOP THREE PODIUM */
+
+#leaderboardScreen .podium {
+    max-width: 950px;
+    margin: 0 auto 55px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 22px;
+}
+
+#leaderboardScreen .podium-card {
+    flex: 1;
+    max-width: 260px;
+    min-height: 220px;
+    padding: 25px 15px;
+    text-align: center;
+
+    background: rgba(13, 8, 30, 0.88);
+    border: 1px solid rgba(192, 132, 252, 0.4);
+    border-radius: 15px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+#leaderboardScreen .podium-card:hover {
+    transform: translateY(-7px);
+    border-color: #c084fc;
+}
+
+#leaderboardScreen .podium-card.first {
+    min-height: 270px;
+    border: 2px solid #ffd700;
+    background: rgba(35, 25, 12, 0.93);
+}
+
+#leaderboardScreen .podium-card.second {
+    border-color: #c0c0c0;
+}
+
+#leaderboardScreen .podium-card.third {
+    border-color: #cd7f32;
+}
+
+#leaderboardScreen .podium-rank {
+    font-size: 1.7rem;
+    font-weight: 900;
+    color: #c084fc;
+    margin-bottom: 12px;
+}
+
+#leaderboardScreen .podium-card.first .podium-rank {
+    color: #ffd700;
+}
+
+#leaderboardScreen .podium-card.second .podium-rank {
+    color: #c0c0c0;
+}
+
+#leaderboardScreen .podium-card.third .podium-rank {
+    color: #cd7f32;
+}
+
+#leaderboardScreen .podium-avatar {
+    font-size: 4rem;
+    margin-bottom: 12px;
+}
+
+#leaderboardScreen .podium-card h3 {
+    color: #ffffff;
+    font-size: 1.8rem;
+    margin: 8px 0;
+    overflow-wrap: anywhere;
+}
+
+#leaderboardScreen .podium-card p {
+    color: #00e5ff;
+    font-size: 1.4rem;
+    font-weight: 900;
+    margin: 8px 0 0;
+}
+
+#leaderboardScreen .podium-card.first p {
+    color: #ffd700;
+}
+
+/* MAIN LEADERBOARD CARD */
+
+#leaderboardScreen .leaderboard-card {
+    max-width: 950px;
+    margin: 0 auto;
+
+    padding: 30px;
+    background: rgba(10, 6, 25, 0.92);
+
+    border: 1px solid rgba(168, 85, 247, 0.55);
+    border-radius: 16px;
+}
+
+/* TABLE HEADING */
+
+#leaderboardScreen .leaderboard-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+#leaderboardScreen .leaderboard-title h2 {
+    color: #ffffff;
+    font-size: 2.3rem;
+    margin: 0 0 8px;
+}
+
+#leaderboardScreen .leaderboard-title p {
+    color: #a78bfa;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    margin: 0;
+}
+
+/* REFRESH BUTTON */
+
+#leaderboardScreen .leaderboard-title .btn-secondary {
+    color: #00e5ff;
+    border: 1px solid #00e5ff;
+    border-radius: 8px;
+    padding: 12px 18px;
+}
+
+#leaderboardScreen .leaderboard-title .btn-secondary:hover {
+    background: rgba(0, 229, 255, 0.12);
+}
+
+/* TABLE */
+
+#leaderboardScreen .leaderboard-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+#leaderboardScreen .leaderboard-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 9px;
+    color: white;
+}
+
+#leaderboardScreen .leaderboard-table thead th {
+    padding: 17px 20px;
+    text-align: left;
+
+    color: #c084fc;
+    font-size: 1.3rem;
+    letter-spacing: 1.5px;
+
+    background: rgba(91, 33, 182, 0.2);
+}
+
+#leaderboardScreen .leaderboard-table thead th:first-child {
+    border-radius: 8px 0 0 8px;
+}
+
+#leaderboardScreen .leaderboard-table thead th:last-child {
+    border-radius: 0 8px 8px 0;
+    text-align: center;
+}
+
+#leaderboardScreen .leaderboard-table tbody tr {
+    background: rgba(35, 22, 58, 0.85);
+    transition: background 0.2s ease;
+}
+
+#leaderboardScreen .leaderboard-table tbody tr:hover {
+    background: rgba(91, 33, 182, 0.45);
+}
+
+#leaderboardScreen .leaderboard-table tbody td {
+    padding: 18px 20px;
+    font-size: 1.5rem;
+    border-top: 1px solid rgba(192, 132, 252, 0.12);
+    border-bottom: 1px solid rgba(192, 132, 252, 0.12);
+}
+
+#leaderboardScreen .leaderboard-table tbody td:first-child {
+    border-left: 1px solid rgba(192, 132, 252, 0.12);
+    border-radius: 8px 0 0 8px;
+    color: #c084fc;
+    font-weight: 900;
+}
+
+#leaderboardScreen .leaderboard-table tbody td:last-child {
+    border-right: 1px solid rgba(192, 132, 252, 0.12);
+    border-radius: 0 8px 8px 0;
+    text-align: center;
+    color: #00e5ff;
+    font-weight: 900;
+}
+
+#leaderboardScreen .leaderboard-empty {
+    text-align: center !important;
+    color: #b9a9ce !important;
+    padding: 35px !important;
+}
+
+/* RESPONSIVE LEADERBOARD */
+
+@media (max-width: 700px) {
+    #leaderboardScreen {
+        padding: 35px 5%;
+    }
+
+    #leaderboardScreen .podium {
+        gap: 10px;
+    }
+
+    #leaderboardScreen .podium-card {
+        min-height: 190px;
+        padding: 15px 8px;
+    }
+
+    #leaderboardScreen .podium-card.first {
+        min-height: 225px;
+    }
+
+    #leaderboardScreen .podium-card h3 {
+        font-size: 1.4rem;
+    }
+
+    #leaderboardScreen .podium-avatar {
+        font-size: 3rem;
+    }
+
+    #leaderboardScreen .leaderboard-card {
+        padding: 18px 12px;
+    }
+
+    #leaderboardScreen .leaderboard-title {
+        flex-wrap: wrap;
+    }
+
+    #leaderboardScreen .leaderboard-table thead th,
+    #leaderboardScreen .leaderboard-table tbody td {
+        padding: 13px 10px;
+        font-size: 1.2rem;
+    }
+}
