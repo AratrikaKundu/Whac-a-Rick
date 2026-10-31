@@ -87,4 +87,29 @@ router.get("/profile", verifyToken, async (req, res) => {
     }
 });
 
+// GET PUBLIC LEADERBOARD
+router.get("/leaderboard", async (req, res) => {
+    try {
+        const [rows] = await db.query(
+            `SELECT name, high_score
+             FROM users
+             WHERE high_score IS NOT NULL
+             ORDER BY high_score DESC, name ASC
+             LIMIT 10`
+        );
+
+        res.json({
+            success: true,
+            leaderboard: rows
+        });
+
+    } catch (error) {
+        console.error("Leaderboard error:", error.message);
+
+        res.status(500).json({
+            success: false,
+            message: "Could not fetch leaderboard"
+        });
+    }
+});
 module.exports = router;

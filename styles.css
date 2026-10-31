@@ -1,163 +1,853 @@
 
+/* ==========================================
+   GLOBAL
+   ========================================== */
+
 *,
 *:before,
 *:after {
-  box-sizing: inherit;
+    box-sizing: inherit;
+    font-family: "Consolas", "Lucida Console", "Courier New", monospace !important;
 }
 
 html {
-  box-sizing: border-box;
-  font-size: 10px;
-  background-image: url('rickandmorty.jpg');
-  background-size: auto;
-}
-
-button {
-  background-color: greenyellow;
-}
-
-.timer {
-  text-align: center;
-  font-size: 3rem;
-  margin-top: 0;
-  color: orange;
-}
-
-.game-over {
-  text-align: center;
-  font-size: 6rem;
-  color: tomato;
-  margin-top: 20px;
-}
-
-.high-score-display {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  font-size: 2.5rem;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 1rem 2rem;
-  border-radius: 1rem;
-  color: magenta;
-  font-weight: bold;
-  z-index: 1000;
-}
-
-.difficulty-select {
-  position: absolute;
-  top: 150px;
-  left: 20px;
-  background: rgba(255, 255, 255, 0.2);
-  padding: 10px 20px;
-  border-radius: 1rem;
-  color: #F42D64;
-  font-size: 1.6rem;
-  font-weight: bold;
-}
-
-.difficulty-select label {
-  margin-right: 10px;
-}
-
-.difficulty-select select {
-  padding: 5px 10px;
-  font-size: 1.4rem;
-  border-radius: 0.5rem;
-  border: none;
-  background-color: #F42D64;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.controls button {
-  margin: 0 5px;
-  padding: 10px 20px;
-  font-size: 1.4rem;
-  border: none;
-  border-radius: 1rem;
-  background-color: greenyellow;
-  cursor: pointer;
+    box-sizing: border-box;
+    font-size: 10px;
+    min-height: 100%;
+    background-image: url('rickandmorty.jpg');
+    background-size: contain;
+    background-position: left top;
+    background-repeat: repeat;
 }
 
 body {
-  padding: 0;
-  margin: 0;
-  font-family: "Lucida Console", "Courier New", monospace;
-  color: #62b3ce;
-  font-weight: bolder;
+    padding: 0;
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Consolas", "Lucida Console", "Courier New", monospace;
+    color: #62b3ce;
+    font-weight: bolder;
+    background: transparent;
 }
 
-h1 {
-  text-align: center;
-  font-size: 9rem;
-  line-height: 1;
-  margin-bottom: 0;
+/* ==========================================
+   SCREEN NAVIGATION
+   ========================================== */
+
+.screen {
+    display: none;
 }
 
-.controls {
-  margin: 20px 5px;
-  text-align: center;
+.screen.active {
+    display: block;
 }
 
-.score {
-  background: rgba(255, 255, 255, 0.2);
-  padding: 0 3rem;
-  line-height: 1;
-  border-radius: 1rem;
+/* ==========================================
+   ORIGINAL GAME UI - PRESERVED
+   ========================================== */
+
+#gameScreen {
+    position: relative;
+    min-height: 100vh;
+    background: transparent;
+    color: #62b3ce;
+    font-weight: bolder;
 }
 
-.game {
-  width: 600px;
-  height: 400px;
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 auto;
+#gameScreen button {
+    background-color: greenyellow;
 }
 
-.hole {
-  flex: 1 0 33.33%;
-  overflow: hidden;
-  position: relative;
+#gameScreen h1 {
+    text-align: center;
+    font-size: 9rem;
+    line-height: 1;
+    margin-bottom: 0;
+    color: #62b3ce;
 }
 
-.hole:after {
-  display: block;
-  background: url('portal.png') bottom center no-repeat;
-  background-size: contain;
-  content: "";
-  width: 100%;
-  height: 120px;
-  position: absolute;
-  z-index: 1;
-  bottom: -10px;
-
-  /* Portal must not intercept clicks */
-  pointer-events: none;
+#gameScreen .container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 50px;
+    font-size: larger;
+    color: darkorange;
 }
 
-.mole {
-  background: url('rickmorty.png') bottom center no-repeat;
-  background-size: 90%;
-  position: absolute;
-  top: 100%;
-  width: 100%;
-  height: 100%;
-  transition: all 0.4s;
-  z-index: 2;
+/* TIMER AND SCORE SIDE BY SIDE */
 
-  /* Keep visible Rick clickable */
-  pointer-events: auto;
-  cursor: pointer;
+#gameScreen .game-stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    margin-top: 15px;
 }
 
-.container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 50px;
-  font-size: larger;
-  color: darkorange;
+#gameScreen .game-stats .timer {
+    text-align: center;
+    font-size: 3rem;
+    margin: 0;
+    color: orange;
 }
 
-.hole.up .mole {
-  top: 0;
+#gameScreen .game-stats .score-display {
+    text-align: center;
+    font-size: 3rem;
+    margin: 0;
+}
+
+#gameScreen .game-over {
+    text-align: center;
+    font-size: 6rem;
+    color: tomato;
+    margin-top: 20px;
+}
+
+#gameScreen .high-score-display {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 2.5rem;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    color: magenta;
+    font-weight: bold;
+    z-index: 1000;
+}
+
+#gameScreen .difficulty-select {
+    position: absolute;
+    top: 150px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px 20px;
+    border-radius: 1rem;
+    color: #F42D64;
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+#gameScreen .difficulty-select label {
+    margin-right: 10px;
+}
+
+#gameScreen .difficulty-select select {
+    padding: 5px 10px;
+    font-size: 1.4rem;
+    border-radius: 0.5rem;
+    border: none;
+    background-color: #F42D64;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#gameScreen .controls {
+    margin: 20px 5px;
+    text-align: center;
+}
+
+#gameScreen .controls button {
+    margin: 0 5px;
+    padding: 10px 20px;
+    font-size: 1.4rem;
+    border: none;
+    border-radius: 1rem;
+    background-color: greenyellow;
+    cursor: pointer;
+}
+
+#gameScreen .score {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0 3rem;
+    line-height: 1;
+    border-radius: 1rem;
+    color: #ff00ff;
+}
+
+#gameScreen .score-display {
+    color: #ff00ff;
+}
+
+#gameScreen .game {
+    width: 600px;
+    height: 400px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+}
+
+#gameScreen .hole {
+    flex: 1 0 33.33%;
+    overflow: hidden;
+    position: relative;
+}
+
+#gameScreen .hole:after {
+    display: block;
+    background: url('portal.png') bottom center no-repeat;
+    background-size: contain;
+    content: "";
+    width: 100%;
+    height: 120px;
+    position: absolute;
+    z-index: 1;
+    bottom: -10px;
+    pointer-events: none;
+}
+
+#gameScreen .mole {
+    background: url('rickmorty.png') bottom center no-repeat;
+    background-size: 90%;
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    height: 100%;
+    transition: all 0.4s;
+    z-index: 2;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+#gameScreen .hole.up .mole {
+    top: 0;
+}
+
+/* ==========================================
+   NAVIGATION
+   ========================================== */
+
+.navbar {
+    min-height: 75px;
+    padding: 15px 6%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    background: #101827;
+    color: white;
+}
+
+.brand {
+    color: white;
+    text-decoration: none;
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.brand-icon,
+.brand-dot {
+    color: #a6ff4d;
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-links button,
+.nav-account button {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.nav-links button:hover,
+.nav-account button:hover {
+    color: #a6ff4d;
+}
+
+.nav-account {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1.3rem;
+}
+
+.nav-account .nav-login {
+    padding: 10px 18px;
+    border: 1px solid #a6ff4d;
+    border-radius: 7px;
+}
+
+/* Hide navbar only during gameplay */
+
+body:has(#gameScreen.active) .navbar {
+    display: none;
+}
+
+/* ==========================================
+   LANDING PAGE - COSMIC PURPLE THEME
+   ========================================== */
+
+#homeScreen {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-height: calc(100vh - 130px);
+    padding: 70px 7% 40px;
+
+    background:
+        linear-gradient(rgba(13, 4, 30, 0.10), rgba(13, 4, 30, 0.20)),
+        url('homePage.jpg') center center / cover no-repeat;
+
+    color: white;
+}
+
+/* Stars in the background */
+
+#homeScreen::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+
+    background-image:
+        radial-gradient(2px 2px at 10% 20%, #ffffff 50%, transparent 100%),
+        radial-gradient(2px 2px at 25% 75%, #d9b3ff 50%, transparent 100%),
+        radial-gradient(1px 1px at 45% 15%, #ffffff 50%, transparent 100%),
+        radial-gradient(2px 2px at 65% 80%, #c084fc 50%, transparent 100%),
+        radial-gradient(1px 1px at 85% 35%, #ffffff 50%, transparent 100%),
+        radial-gradient(2px 2px at 95% 65%, #d8b4fe 50%, transparent 100%),
+        radial-gradient(1px 1px at 35% 45%, #ffffff 50%, transparent 100%);
+
+    background-size: 350px 350px;
+    opacity: 0.7;
+}
+
+#homeScreen .hero,
+#homeScreen .feature-strip {
+    position: relative;
+    z-index: 1;
+}
+
+/* Hero layout */
+
+.hero {
+    max-width: 1200px;
+    min-height: 470px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.hero-content {
+    flex: 1;
+    max-width: 620px;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #d8b4fe;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+
+.status-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #c084fc;
+    box-shadow: 0 0 14px #a855f7;
+}
+
+#homeScreen h1 {
+    margin: 25px 0;
+    color: white;
+    font-size: clamp(4rem, 7vw, 7.5rem);
+    line-height: 1.15;
+    text-align: left;
+    text-shadow: 0 0 30px rgba(168, 85, 247, 0.25);
+}
+
+#homeScreen h1 span {
+    color: #c084fc;
+    text-shadow: 0 0 25px rgba(192, 132, 252, 0.55);
+}
+
+.hero-subtitle {
+    font-size: 2.1rem;
+    font-weight: 700;
+    color: #eadcff;
+}
+
+.hero-description {
+    max-width: 480px;
+    margin: 18px 0 30px;
+    color: #c4b5d8;
+    font-size: 1.6rem;
+    line-height: 1.8;
+}
+
+/* Hero buttons */
+
+.hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.btn {
+    padding: 15px 23px;
+    border-radius: 7px;
+    font-size: 1.3rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+}
+
+.btn-primary {
+    background: #a6ff4d;
+    color: #101827;
+    border: 1px solid #a6ff4d;
+}
+
+.btn-secondary {
+    background: transparent;
+    color: white;
+    border: 1px solid #607487;
+}
+
+/* Purple landing page buttons */
+
+#homeScreen .btn-primary {
+    background: linear-gradient(135deg, #a855f7, #7e22ce);
+    color: white;
+    border: 1px solid #c084fc;
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+}
+
+#homeScreen .btn-primary:hover {
+    background: linear-gradient(135deg, #c084fc, #9333ea);
+    box-shadow: 0 0 30px rgba(168, 85, 247, 0.55);
+}
+
+#homeScreen .btn-secondary {
+    color: #e9d5ff;
+    border-color: #9333ea;
+}
+
+#homeScreen .btn-secondary:hover {
+    background: rgba(147, 51, 234, 0.2);
+    border-color: #c084fc;
+}
+
+/* Leaderboard link */
+
+.text-button {
+    display: block;
+    margin-top: 25px;
+    padding: 8px 0;
+    background: transparent;
+    border: none;
+    color: #a6ff4d;
+    font-size: 1.3rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#homeScreen .text-button {
+    color: #d8b4fe;
+}
+
+#homeScreen .text-button:hover {
+    color: white;
+    text-shadow: 0 0 12px #a855f7;
+}
+
+/* Rick and Morty image */
+
+.hero-art {
+    flex: 1;
+    max-width: 450px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.portal-glow {
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    background: #a855f7;
+    filter: blur(100px);
+    opacity: 0.38;
+}
+
+.hero-image {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 420px;
+    object-fit: contain;
+}
+
+/* Feature cards */
+
+.feature-strip {
+    max-width: 1200px;
+    margin: 50px auto 0;
+    padding: 25px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+
+    background: rgba(35, 12, 64, 0.55);
+    border: 1px solid rgba(192, 132, 252, 0.25);
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(12px);
+}
+
+.feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.feature-number {
+    color: #c084fc;
+    font-size: 2rem;
+    font-weight: 800;
+    text-shadow: 0 0 12px rgba(168, 85, 247, 0.5);
+}
+
+.feature h3 {
+    margin: 0 0 8px;
+    color: #f3e8ff;
+    font-size: 1.3rem;
+}
+
+.feature p {
+    margin: 0;
+    color: #c4b5d8;
+    font-size: 1.2rem;
+}
+
+/* ==========================================
+   AUTHENTICATION - ORIGINAL STYLING PRESERVED
+   ========================================== */
+
+#authScreen {
+    min-height: calc(100vh - 130px);
+    padding: 55px 7%;
+      background:
+        linear-gradient(rgba(10, 20, 35, 0.25), rgba(10, 20, 35, 0.25)),
+        url('homePage2.jpg') center center / cover no-repeat;
+      }
+
+.auth-layout {
+    max-width: 1000px;
+    min-height: 550px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+    border-radius: 15px;
+    background: rgba(16, 24, 39, 0.55);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.auth-visual {
+    display: flex;
+    align-items: flex-end;
+    padding: 40px;
+    background:
+        linear-gradient(0deg, rgba(10, 20, 35, 0.95), rgba(10, 20, 35, 0.1)),
+        url('rickandmorty.jpg') center/cover;
+}
+
+.auth-visual h2 {
+    color: white;
+    font-size: 3rem;
+}
+
+.auth-visual p {
+    color: #c3d0dc;
+    font-size: 1.5rem;
+    line-height: 1.7;
+}
+
+.auth-card {
+    padding: 40px;
+    color: white;
+}
+
+.auth-tabs {
+    display: flex;
+    gap: 25px;
+    margin-bottom: 35px;
+    border-bottom: 1px solid #405064;
+}
+
+.auth-tab {
+    padding: 12px 5px;
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: #aebdca;
+    font-size: 1.4rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.auth-tab.active {
+    color: #a6ff4d;
+    border-bottom-color: #a6ff4d;
+}
+
+.auth-card h2 {
+    color: white;
+    font-size: 2.8rem;
+}
+
+.auth-subtitle {
+    color: #aebdca;
+    font-size: 1.3rem;
+    margin-bottom: 25px;
+}
+
+.auth-card label {
+    display: block;
+    margin: 18px 0 8px;
+    color: #cbd6df;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.auth-card input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #405064;
+    border-radius: 6px;
+    outline: none;
+    background: #101b29;
+    color: white;
+    font-size: 1.4rem;
+}
+
+.auth-card input:focus {
+    border-color: #a6ff4d;
+}
+
+.auth-submit {
+    width: 100%;
+    margin-top: 25px;
+}
+
+.auth-message {
+    color: #a6ff4d;
+    font-size: 1.3rem;
+}
+
+.guest-link {
+    margin-top: 15px;
+}
+
+/* ==========================================
+   FOOTER
+   ========================================== */
+
+footer {
+    position: relative;
+    width: 100%;
+    padding: 15px 30px;
+    margin: 0;
+    background: transparent;
+    color: #62b3ce;
+    text-align: right;
+    font-size: 1.2rem;
+    border: none;
+}
+
+/* Purple footer only on landing page */
+
+body:has(#homeScreen.active) footer {
+    background: #0d061c;
+    color: #b794d6;
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 800px) {
+    .navbar {
+        flex-wrap: wrap;
+    }
+
+    .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .hero {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero-art {
+        max-width: 300px;
+    }
+
+    .feature-strip {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-visual {
+        min-height: 220px;
+    }
+}
+
+/* ==========================================
+   LANDING PAGE HEADER AND FOOTER
+   ========================================== */
+
+body:has(#homeScreen.active) header,
+body:has(#homeScreen.active) footer,
+body:has(#homeScreen.active) nav,
+body:has(#homeScreen.active) .navbar {
+    display: none;
+}
+body:has(#authScreen.active) .navbar {
+    background: transparent !important;
+}
+
+#authScreen .guest-link:hover {
+    color: #ff00ff;
+    text-shadow: 0 0 10px #ff00ff;
+}
+
+#authScreen .auth-submit:hover,
+#authScreen .auth-tab:hover {
+    color: #ff00ff;
+    text-shadow: 0 0 10px #ff00ff;
+}
+
+#authScreen .auth-card h2 {
+    color: #39FF14;
+    text-shadow:
+        0 0 5px #BF00FF,
+        0 0 15px #A855F7,
+        0 0 30px #BF00FF,
+        0 0 45px rgba(191, 0, 255, 0.8);
+}
+
+.auth-card input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #8B2BE2;
+    border-radius: 8px;
+    outline: none;
+    background: rgba(16, 11, 32, 0.85);
+    color: #00E5FF;
+    font-size: 1.4rem;
+    box-shadow: inset 0 0 10px rgba(139, 43, 226, 0.15);
+    transition: 0.25s ease;
+}
+
+
+/* ==========================================
+   NEON PURPLE AUTH CARDS + CYAN INPUTS
+   ========================================== */
+
+/* Login and Register cards */
+#authScreen .auth-card {
+    background: rgba(8, 3, 20, 0.95) !important;
+    border: 1px solid #BF00FF !important;
+    border-radius: 18px;
+
+    box-shadow:
+        0 0 8px #BF00FF,
+        0 0 20px #BF00FF,
+        0 0 40px rgba(191, 0, 255, 0.85),
+        0 0 70px rgba(168, 85, 247, 0.65),
+        0 0 100px rgba(191, 0, 255, 0.35) !important;
+}
+/* Input fields */
+#authScreen .auth-card input {
+    background: rgba(0, 229, 255, 0.08) !important;
+    color: #00E5FF !important;
+
+    border: 1px solid #00E5FF !important;
+    border-radius: 9px;
+
+    box-shadow:
+        inset 0 0 8px rgba(0, 229, 255, 0.12),
+        0 0 7px rgba(0, 229, 255, 0.2);
+
+    outline: none;
+}
+
+/* Placeholder text */
+#authScreen .auth-card input::placeholder {
+    color: rgba(0, 229, 255, 0.6);
+}
+
+/* Input focus glow */
+#authScreen .auth-card input:focus {
+    border-color: #00E5FF !important;
+
+    box-shadow:
+        0 0 8px #00E5FF,
+        0 0 18px rgba(0, 229, 255, 0.45),
+        inset 0 0 8px rgba(0, 229, 255, 0.15);
+}
+
+/* Password eye button */
+#authScreen .toggle-password {
+    color: #00E5FF !important;
+}
+
+#authScreen .toggle-password:hover {
+    color: #FF00FF !important;
+    text-shadow: 0 0 10px #FF00FF;
+}
+
+/* Prevent white input flash and browser autofill */
+#authScreen .auth-card input {
+    background-color: #100B20 !important;
+    color: #00E5FF !important;
+    -webkit-text-fill-color: #00E5FF !important;
+    caret-color: #00E5FF;
+    color-scheme: dark;
+}
+
+#authScreen .auth-card input:-webkit-autofill,
+#authScreen .auth-card input:-webkit-autofill:hover,
+#authScreen .auth-card input:-webkit-autofill:focus {
+    -webkit-text-fill-color: #00E5FF !important;
+    -webkit-box-shadow: 0 0 0 1000px #100B20 inset !important;
+    box-shadow: 0 0 0 1000px #100B20 inset !important;
+    transition: background-color 9999s ease-in-out 0s;
+}
+#authScreen .auth-visual-content h2 {
+    color: #FF00FF !important;
+    text-shadow: none !important;
 }

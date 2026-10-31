@@ -3,187 +3,435 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whac-a-mole</title>
+
+    <title>Click-a-Rick! | Interdimensional Arcade</title>
 
     <link rel="icon" href="rick2.png" type="image/x-icon">
     <link rel="stylesheet" href="styles.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-    <!-- Background Music -->
+    <!-- BACKGROUND MUSIC -->
     <audio id="bgMusic" loop>
         <source src="bgmusic.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
     </audio>
 
+    <!-- NAVIGATION -->
+    <nav class="navbar">
 
-    <!-- PLAYER AUTHENTICATION -->
-    <div class="auth-container" id="authContainer">
+        <a href="#" class="brand" onclick="showScreen('homeScreen'); return false;">
+            <span class="brand-icon">✦</span>
+            CLICK-A-RICK<span class="brand-dot">.</span>
+        </a>
 
-        <h2>Player Account</h2>
-
-        <!-- Registration -->
-        <div id="registerForm">
-            <h3>Create Account</h3>
-
-            <input
-                type="text"
-                id="registerName"
-                placeholder="Your name"
-            >
-
-            <input
-                type="email"
-                id="registerEmail"
-                placeholder="Email"
-            >
-
-            <input
-                type="password"
-                id="registerPassword"
-                placeholder="Password"
-            >
-
-            <button onclick="registerUser()">Register</button>
+        <div class="nav-links">
+            <button onclick="showScreen('homeScreen')">Home</button>
+            <button onclick="showScreen('gameScreen')">Play</button>
+            <button onclick="showLeaderboard()">Leaderboard</button>
         </div>
 
-
-        <!-- Login -->
-        <div id="loginForm">
-            <h3>Already registered? Login</h3>
-
-            <input
-                type="email"
-                id="loginEmail"
-                placeholder="Email"
-            >
-
-            <input
-                type="password"
-                id="loginPassword"
-                placeholder="Password"
-            >
-
-            <button onclick="loginUser()">Login</button>
+        <div class="nav-account">
+            <span id="navPlayerName">GUEST</span>
+            <button id="navAuthButton" class="nav-login"
+                onclick="showScreen('authScreen')">
+                Login
+            </button>
+            <button id="logoutButton" class="nav-login"
+                onclick="logoutUser()" style="display:none;">
+                Logout
+            </button>
         </div>
 
+    </nav>
 
-        <!-- Authentication Messages -->
-        <p id="authMessage"></p>
+    <main>
 
-        <p id="loggedInUser"></p>
+        <!-- HOME SCREEN -->
+        <section id="homeScreen" class="screen active">
 
-        <button
-            id="logoutButton"
-            onclick="logoutUser()"
-            style="display: none;"
-        >
-            Logout
-        </button>
+            <div class="hero">
 
-    </div>
+                <div class="hero-content">
 
+                    <div class="eyebrow">
+                        <span class="status-dot"></span>
+                        INTERDIMENSIONAL ARCADE
+                    </div>
 
-    <!-- GAME HEADING -->
-    <h1>
-        Click-a-Rick!
-        <span class="score">0</span>
-    </h1>
+                    <h1>
+                        Click-A-<span>Rick!</span>
+                    </h1>
 
+                    <p class="hero-subtitle">
+                        One portal. Six holes. Endless Ricks.
+                    </p>
 
-    <!-- TIMER -->
-    <h2 class="timer">
-        Time Left:
-        <span class="time-left">10</span>s
-    </h2>
+                    <p class="hero-description">
+                        Think your reflexes are fast enough?
+                        Enter the multiverse and prove it.
+                    </p>
 
+                    <div class="hero-buttons">
 
-    <!-- HIGH SCORE -->
-    <h2 class="high-score-display">
-        High Score:
-        <span class="high-score">0</span>
-    </h2>
+                        <button class="btn btn-primary"
+                            onclick="playAsGuest()">
+                            PLAY AS GUEST <span>→</span>
+                        </button>
 
+                        <button class="btn btn-secondary"
+                            onclick="showScreen('authScreen')">
+                            LOGIN / REGISTER
+                        </button>
 
-    <!-- PLAYER NAME -->
-    <h3>
-        Player:
-        <span id="playerName">Guest</span>
-    </h3>
+                    </div>
 
+                    <button class="text-button"
+                        onclick="showLeaderboard()">
+                        VIEW THE LEADERBOARD →
+                    </button>
 
-    <!-- GAME OVER -->
-    <h2 class="game-over" style="display: none;">
-        Game Over!
-    </h2>
+                </div>
 
+                <div class="hero-art">
+                    <div class="portal-glow"></div>
+                    <img src="rickmorty.png" alt="Rick and Morty"
+                        class="hero-image">
+                </div>
 
-    <!-- DIFFICULTY -->
-    <div class="difficulty-select">
+            </div>
 
-        <label for="difficulty">Difficulty:</label>
+            <div class="feature-strip">
 
-        <select id="difficulty" onchange="updateDifficulty()">
-            <option value="easy">Easy</option>
-            <option value="medium" selected>Medium</option>
-            <option value="hard">Hard</option>
-        </select>
+                <div class="feature">
+                    <span class="feature-number">01</span>
+                    <div>
+                        <h3>ENTER THE GAME</h3>
+                        <p>Play instantly, no account needed.</p>
+                    </div>
+                </div>
 
-    </div>
+                <div class="feature">
+                    <span class="feature-number">02</span>
+                    <div>
+                        <h3>BEAT YOUR BEST</h3>
+                        <p>Improve your reflexes and high score.</p>
+                    </div>
+                </div>
 
+                <div class="feature">
+                    <span class="feature-number">03</span>
+                    <div>
+                        <h3>CLAIM THE CROWN</h3>
+                        <p>Compete with players on the leaderboard.</p>
+                    </div>
+                </div>
 
-    <!-- GAME CONTROLS -->
-    <div class="controls">
+            </div>
 
-        <button onclick="startGame()">Start!</button>
+        </section>
 
-        <button onclick="toggleMusic()">Mute/Unmute</button>
+        <!-- AUTHENTICATION SCREEN -->
+        <section id="authScreen" class="screen">
 
-    </div>
+            <div class="auth-layout">
 
+                <div class="auth-visual">
+                    <div class="auth-visual-content">
+                        <span class="eyebrow">WELCOME TO THE MULTIVERSE</span>
+                        <h2>Your next high score awaits.</h2>
+                        <p>
+                            Create your player account to save your
+                            records and compete with the best.
+                        </p>
+                    </div>
+                </div>
 
-    <!-- GAME BOARD -->
-    <div class="game">
+                <div class="auth-card">
 
-        <div class="hole hole1">
-            <div class="mole"></div>
-        </div>
+                    <div class="auth-tabs">
+                        <button id="loginTab" class="auth-tab active"
+                            onclick="switchAuthMode('login')">
+                            LOGIN
+                        </button>
 
-        <div class="hole hole2">
-            <div class="mole"></div>
-        </div>
+                        <button id="registerTab" class="auth-tab"
+                            onclick="switchAuthMode('register')">
+                            REGISTER
+                        </button>
+                    </div>
 
-        <div class="hole hole3">
-            <div class="mole"></div>
-        </div>
+                    <!-- LOGIN FORM -->
+                    <div id="loginForm">
 
-        <div class="hole hole4">
-            <div class="mole"></div>
-        </div>
+                        <h2>Welcome back.</h2>
+                        <p class="auth-subtitle">
+                            Log in to continue your arcade journey.
+                        </p>
 
-        <div class="hole hole5">
-            <div class="mole"></div>
-        </div>
+                        <label for="loginEmail">EMAIL ADDRESS</label>
+                        <input type="email" id="loginEmail"
+                            placeholder="you@example.com">
 
-        <div class="hole hole6">
-            <div class="mole"></div>
-        </div>
+                        <label for="loginPassword">PASSWORD</label>
 
-    </div>
+                        <div class="password-wrapper">
+                            <input type="password" id="loginPassword"
+                                placeholder="Enter your password">
 
+                            <button type="button"
+                                class="toggle-password"
+                                onclick="togglePassword('loginPassword', this)"
+                                aria-label="Show password">
+                                👁
+                            </button>
+                        </div>
+
+                        <button class="btn btn-primary auth-submit"
+                            onclick="loginUser()">
+                            LOGIN →
+                        </button>
+
+                    </div>
+
+                    <!-- REGISTER FORM -->
+                    <div id="registerForm" style="display:none;">
+
+                        <h2>Create account.</h2>
+                        <p class="auth-subtitle">
+                            Join the leaderboard and save your scores.
+                        </p>
+
+                        <label for="registerName">PLAYER NAME</label>
+                        <input type="text" id="registerName"
+                            placeholder="Your name">
+
+                        <label for="registerEmail">EMAIL ADDRESS</label>
+                        <input type="email" id="registerEmail"
+                            placeholder="you@example.com">
+
+                        <label for="registerPassword">PASSWORD</label>
+
+                        <div class="password-wrapper">
+                            <input type="password" id="registerPassword"
+                                placeholder="At least 8 characters">
+
+                            <button type="button"
+                                class="toggle-password"
+                                onclick="togglePassword('registerPassword', this)"
+                                aria-label="Show password">
+                                👁
+                            </button>
+                        </div>
+
+                        <button class="btn btn-primary auth-submit"
+                            onclick="registerUser()">
+                            CREATE ACCOUNT →
+                        </button>
+
+                    </div>
+
+                    <p id="authMessage" class="auth-message"></p>
+
+                    <button class="text-button guest-link"
+                        onclick="playAsGuest()">
+                        OR CONTINUE AS GUEST
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ORIGINAL GAME SCREEN -->
+        <section id="gameScreen" class="screen game-screen-original">
+
+            <!--HOME-->
+            <button class="home-button" onclick="showScreen('authScreen')">HOME</button>
+
+            <!-- HIGH SCORE -->
+            <div class="high-score-display">
+                HIGH SCORE: <span class="high-score">0</span>
+            </div>
+
+            <!-- DIFFICULTY -->
+            <div class="difficulty-select">
+                <label for="difficulty">Difficulty:</label>
+
+                <select id="difficulty" onchange="updateDifficulty()">
+                    <option value="easy">Easy</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+
+            <div class="container">
+
+                <h1>CLICK-A-RICK!</h1>
+
+                <p style="text-align:center;">
+                    Playing as: <strong id="playerName">Guest</strong>
+                </p>
+
+                <!-- TIMER AND SCORE SIDE BY SIDE -->
+                <div class="game-stats">
+
+                    <div class="timer">
+                        Time Left: <span class="time-left">10</span>
+                    </div>
+
+                    <div class="score-display">
+                        Score: <span class="score">0</span>
+                    </div>
+
+                </div>
+
+                <!-- GAME OVER -->
+                <h2 class="game-over" style="display:none;">
+                    GAME OVER!
+                </h2>
+
+                <!-- CONTROLS -->
+                <div class="controls">
+                    <button onclick="startGame()">Start Game</button>
+                    <button onclick="toggleMusic()">♫ Music</button>
+                </div>
+
+                <!-- SIX-HOLE GAME BOARD -->
+                <div class="game">
+
+                    <div class="hole hole1">
+                        <div class="mole"></div>
+                    </div>
+
+                    <div class="hole hole2">
+                        <div class="mole"></div>
+                    </div>
+
+                    <div class="hole hole3">
+                        <div class="mole"></div>
+                    </div>
+
+                    <div class="hole hole4">
+                        <div class="mole"></div>
+                    </div>
+
+                    <div class="hole hole5">
+                        <div class="mole"></div>
+                    </div>
+
+                    <div class="hole hole6">
+                        <div class="mole"></div>
+                    </div>
+
+                </div>
+
+                <p id="loggedInUser" style="text-align:center;"></p>
+
+            </div>
+
+        </section>
+
+        <!-- LEADERBOARD SCREEN -->
+        <section id="leaderboardScreen" class="screen">
+
+            <div class="leaderboard-header">
+
+                <span class="eyebrow">MULTIVERSE RANKINGS</span>
+
+                <h1>THE <span>LEADERBOARD</span></h1>
+
+                <p>
+                    The fastest hands in the multiverse.
+                    Do you have what it takes?
+                </p>
+
+            </div>
+
+            <!-- TOP THREE -->
+            <div id="podium" class="podium">
+
+                <div class="podium-card second">
+                    <span class="podium-rank">#2</span>
+                    <div class="podium-avatar">🥈</div>
+                    <h3>---</h3>
+                    <p>0 POINTS</p>
+                </div>
+
+                <div class="podium-card first">
+                    <span class="podium-rank">#1</span>
+                    <div class="podium-avatar">🏆</div>
+                    <h3>---</h3>
+                    <p>0 POINTS</p>
+                </div>
+
+                <div class="podium-card third">
+                    <span class="podium-rank">#3</span>
+                    <div class="podium-avatar">🥉</div>
+                    <h3>---</h3>
+                    <p>0 POINTS</p>
+                </div>
+
+            </div>
+
+            <!-- FULL RANKING -->
+            <div class="leaderboard-card">
+
+                <div class="leaderboard-title">
+                    <div>
+                        <h2>TOP PLAYERS</h2>
+                        <p>THE BEST OF THE BEST</p>
+                    </div>
+
+                    <button class="btn btn-secondary"
+                        onclick="showLeaderboard()">
+                        ↻ REFRESH
+                    </button>
+                </div>
+
+                <div class="leaderboard-table-wrap">
+
+                    <table class="leaderboard-table">
+
+                        <thead>
+                            <tr>
+                                <th>RANK</th>
+                                <th>PLAYER</th>
+                                <th>HIGH SCORE</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="leaderboardBody">
+                            <tr>
+                                <td colspan="3" class="leaderboard-empty">
+                                    Leaderboard will appear here.
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
 
     <!-- FOOTER -->
     <footer>
-        <div class="container">
-            <p>2025 &Star; Aratrika Kundu</p>
-        </div>
+        <p>Built for the multiverse ✦ Aratrika Kundu © 2025</p>
     </footer>
 
-
-    <!-- JAVASCRIPT -->
     <script src="app.js"></script>
 
 </body>
