@@ -347,24 +347,34 @@ function toggleMusic() {
 // ==========================================
 // AUTOMATIC BACKGROUND MUSIC
 // ==========================================
+// ==========================================
+// AUTOMATIC BACKGROUND MUSIC
+// ==========================================
+
+let musicStarted = false;
 
 function startBackgroundMusic() {
-    if (!bgMusic || !bgMusic.paused) return;
+    if (!bgMusic || musicStarted) return;
 
     bgMusic.volume = 0.4;
 
-    bgMusic.play().catch(error => {
-        console.log("Autoplay blocked. Waiting for user interaction.");
-    });
+    bgMusic.play()
+        .then(() => {
+            musicStarted = true;
+            console.log("Background music started!");
+        })
+        .catch(error => {
+            console.log("Browser blocked autoplay:", error);
+        });
 }
 
-// Try autoplay when the page loads
+// Attempt autoplay when page loads
 window.addEventListener("load", startBackgroundMusic);
 
-// If autoplay is blocked, start music on the first interaction
-document.addEventListener("click", startBackgroundMusic, { once: true });
-
-
+// Start after the first user interaction
+["click", "keydown", "touchstart"].forEach(eventType => {
+    document.addEventListener(eventType, startBackgroundMusic);
+});
 // ==========================================
 // GAME LOGIC
 // ==========================================
