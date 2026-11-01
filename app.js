@@ -100,6 +100,7 @@ function togglePassword(inputId, button) {
     }
 }
 
+
 // ==========================================
 // GUEST MODE
 // ==========================================
@@ -258,7 +259,9 @@ async function fetchProfile() {
 
         highScore = Number(user.high_score) || 0;
 
-        highScoreDisplay.textContent = highScore;
+        if (highScoreDisplay) {
+            highScoreDisplay.textContent = highScore;
+        }
 
         document.getElementById("loggedInUser").textContent =
             `Logged in as ${user.name}`;
@@ -287,7 +290,10 @@ function logoutUser(showMessage = true) {
     sessionStorage.removeItem("token");
 
     highScore = 0;
-    highScoreDisplay.textContent = 0;
+
+    if (highScoreDisplay) {
+        highScoreDisplay.textContent = 0;
+    }
 
     document.getElementById("loggedInUser").textContent = "";
 
@@ -339,6 +345,27 @@ function toggleMusic() {
 
 
 // ==========================================
+// AUTOMATIC BACKGROUND MUSIC
+// ==========================================
+
+function startBackgroundMusic() {
+    if (!bgMusic || !bgMusic.paused) return;
+
+    bgMusic.volume = 0.4;
+
+    bgMusic.play().catch(error => {
+        console.log("Autoplay blocked. Waiting for user interaction.");
+    });
+}
+
+// Try autoplay when the page loads
+window.addEventListener("load", startBackgroundMusic);
+
+// If autoplay is blocked, start music on the first interaction
+document.addEventListener("click", startBackgroundMusic, { once: true });
+
+
+// ==========================================
 // GAME LOGIC
 // ==========================================
 
@@ -370,9 +397,6 @@ function peep() {
     const hole = randomHole(holes);
 
     hole.classList.add('up');
-
-    // Rick disappears naturally when this timer expires.
-    // Clicking Rick does not affect this timer.
 
     moleTimeout = setTimeout(() => {
         hole.classList.remove('up');
@@ -453,11 +477,7 @@ async function endGame() {
     timerDisplay.textContent = 0;
     gameOverText.style.display = 'block';
 
-    // Stop music at the end of the game
-    if (bgMusic) {
-        bgMusic.pause();
-        bgMusic.currentTime = 0;
-    }
+    // Music continues playing after the game ends.
 
     // Save score only for logged-in players
     if (token && !guestMode) {
@@ -493,7 +513,6 @@ if (gameBoard) {
 
         if (!hole || !hole.classList.contains('up')) return;
 
-        // Every click on a visible Rick adds one point.
         score++;
 
         scoreBoard.textContent = score;
@@ -502,11 +521,6 @@ if (gameBoard) {
             highScore = score;
             highScoreDisplay.textContent = highScore;
         }
-
-        // IMPORTANT:
-        // Do not hide Rick here.
-        // Do not clear moleTimeout here.
-        // Do not call peep() here.
 
         console.log("BONK! Score:", score);
     });
