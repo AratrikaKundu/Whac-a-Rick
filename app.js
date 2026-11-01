@@ -347,10 +347,7 @@ function toggleMusic() {
 // ==========================================
 // AUTOMATIC BACKGROUND MUSIC
 // ==========================================
-// ==========================================
 // AUTOMATIC BACKGROUND MUSIC
-// ==========================================
-
 let musicStarted = false;
 
 function startBackgroundMusic() {
@@ -364,14 +361,14 @@ function startBackgroundMusic() {
             console.log("Background music started!");
         })
         .catch(error => {
-            console.log("Browser blocked autoplay:", error);
+            console.log("Waiting for user interaction to start music.");
         });
 }
 
-// Attempt autoplay when page loads
+// Try playing when the page loads
 window.addEventListener("load", startBackgroundMusic);
 
-// Start after the first user interaction
+// Start music after the first interaction anywhere
 ["click", "keydown", "touchstart"].forEach(eventType => {
     document.addEventListener(eventType, startBackgroundMusic);
 });
