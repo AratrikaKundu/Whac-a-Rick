@@ -38,11 +38,6 @@
             <button onclick="showLeaderboard()">Leaderboard</button>
         </div>
 
-        <!-- MUSIC BUTTON AVAILABLE ON EVERY SCREEN -->
-        <button class="music-toggle" onclick="toggleMusic()">
-            ♫ MUSIC
-        </button>
-
         <div class="nav-account">
             <span id="navPlayerName">GUEST</span>
             <button id="navAuthButton" class="nav-login"
@@ -61,6 +56,13 @@
 
         <!-- HOME SCREEN -->
         <section id="homeScreen" class="screen active">
+
+            <!-- HOME MUSIC BUTTON -->
+            <div class="home-music-control">
+                <button class="music-toggle" onclick="toggleMusic()">
+                    ♫ MUSIC
+                </button>
+            </div>
 
             <div class="hero">
 
@@ -259,8 +261,19 @@
         <!-- ORIGINAL GAME SCREEN -->
         <section id="gameScreen" class="screen game-screen-original">
 
-            <!-- HOME -->
-            <button class="home-button" onclick="showScreen('authScreen')">HOME</button>
+            <!-- GAME TOP CONTROLS -->
+            <div class="game-top-controls">
+
+                <button class="home-button"
+                    onclick="showScreen('authScreen')">
+                    HOME
+                </button>
+
+                <button class="music-toggle" onclick="toggleMusic()">
+                    ♫ MUSIC
+                </button>
+
+            </div>
 
             <!-- HIGH SCORE -->
             <div class="high-score-display">
