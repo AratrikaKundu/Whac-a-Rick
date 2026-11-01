@@ -12,7 +12,7 @@ const gameOverText = document.querySelector('.game-over');
 const highScoreDisplay = document.querySelector('.high-score');
 const bgMusic = document.getElementById('bgMusic');
 
-const API_URL = "http://localhost:3000";
+const API_URL = "https://whac-a-rick-backend.onrender.com";
 
 // Authentication state
 let token = sessionStorage.getItem("token");
