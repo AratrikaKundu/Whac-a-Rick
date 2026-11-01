@@ -1147,3 +1147,19 @@ body:has(#authScreen.active) .navbar {
         font-size: 1.2rem;
     }
 }
+.music-toggle {
+    background: transparent;
+    border: 1px solid #b44cff;
+    color: #d9a5ff;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-family: 'Orbitron', sans-serif;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.music-toggle:hover {
+    background: #8b2be2;
+    color: white;
+    box-shadow: 0 0 12px #b44cff;
+}
